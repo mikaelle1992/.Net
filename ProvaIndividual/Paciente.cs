@@ -75,7 +75,7 @@ class Paciente{
     public static void GerarRelatorioIdadeMinMaxPaciente(int idadeMinimo, int idadeMaximo, List<Paciente> pacientes) {
     var idadeNoIntervalo = pacientes.Where(m => m.IdadePaciente >= idadeMinimo && m.IdadePaciente <= idadeMaximo).ToList();
 
-    Console.WriteLine($"Médicos com idade entre {idadeMinimo} e {idadeMaximo}:");
+    Console.WriteLine($"Paciente com idade entre {idadeMinimo} e {idadeMaximo}:");
     foreach (var paciente in idadeNoIntervalo) {
         Console.WriteLine($"Paciente \nNome: {paciente.Nome}, Idade: {paciente.IdadePaciente}");
     }
@@ -83,13 +83,12 @@ class Paciente{
 
     public static void BuscarPacientesPeloSexo(string sexo,List<Paciente> pacientes){
         var pacientesSexo = pacientes.Where(m => m.Sexo == sexo).ToList();
-        foreach (var paciente in pacientes) {
+        foreach (var paciente in pacientesSexo) {
             Console.WriteLine($"Paciente \nNome: {paciente.Nome}, Sexo: {paciente.Sexo}");
             
         }
 
     }
-
     public static void ImprimiPacienteOrdemAlfabetica(List<Paciente> pacientes) {
         var pacientesOrdenados = pacientes.OrderBy(p => p.Nome).ToList();
 
