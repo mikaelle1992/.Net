@@ -60,8 +60,6 @@ class Program{
         }   
     }
 
-    
-
     static bool ValidaCPF(string cpf){
         return cpf.Length == 11;
     }

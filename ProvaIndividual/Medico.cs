@@ -18,14 +18,6 @@ class Medico{
     }
 
     public static void CadastrarMedico(Medico medico, List<Medico> medicos){
-        medicos.Add(medico);
-    }
-
-    public static void ValidacoesDados(Medico medico){
-        
-    }
-    public static void SolicitaDados(List<Medico> medicos){
-
         try{
             Console.WriteLine("Digite o Nome do medico:");
             string nomeMedico = Console.ReadLine()!;
@@ -38,14 +30,30 @@ class Medico{
             
             Console.WriteLine("Digite o preço Unitário do produto:");
             string crm = Console.ReadLine()!;
-
-            Medico novoProduto = new Medico(nomeMedico, dataNascMedico, cpfMedico, crm);
-
-            Medico.CadastrarMedico(novoProduto, medicos);
-
+            if(ValidaCPF(cpfMedico)){
+                Medico novoProduto = new Medico(nomeMedico, dataNascMedico, cpfMedico, crm);
+                medicos.Add(novoProduto);
+            }else{
+                throw new Exception("CPF invalido");
+            }
 
         }catch(Exception e){
             Console.WriteLine($"Erro {e}");
-        }     
+        } 
+
     }
+    public static bool ValidaCPF(string CPF){
+        return CPF.Length == 11;
+    }
+
+    public static bool VerificaCRM(string CRM, List<Medico> medicos){
+        foreach (var medico in medicos) {
+            if(medico.CRM == CRM){
+                return false;
+            }
+        }
+        return true;
+    }
+
+ 
 }
