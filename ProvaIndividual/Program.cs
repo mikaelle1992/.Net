@@ -11,10 +11,10 @@ class Program{
             Console.WriteLine("1. Adicionar Medico");
             Console.WriteLine("2. Lista de Medicos");
             Console.WriteLine("3. Adicionar Paciente");
-            Console.WriteLine("4. Lista de Pacientea");
-            Console.WriteLine("5. ");
-            Console.WriteLine("5. Gerar Relatorio de  entre os Valores Minimo e Maximo");
-            Console.WriteLine("7. ");
+            Console.WriteLine("4. Lista de Paciente");
+            Console.WriteLine("5. Gerar Relatorio de  entre a idade Minima e Maxima do medico");
+            Console.WriteLine("6. Gerar Relatorio de  entre a idade Minima e Maxima do Paciente");
+            Console.WriteLine("7. Listar pacientes pelo sexo");
             Console.WriteLine("0. Sair");
 
             Console.Write("Escolha uma opção: ");
@@ -46,20 +46,34 @@ class Program{
 
                 case "4":
                         if(VerificaTamanhoListaPaciente(pacientes) > 0){
-                        Paciente.ImprimiPaciente(pacientes);
-                    }else{
-                        Console.WriteLine("---Lista Vazia");
-                    }
+                            Paciente.ImprimiPaciente(pacientes);
+                        }else{
+                            Console.WriteLine("---Lista Vazia");
+                        }
                     break;
 
                 case "5":
-                   
+                        if(VerificaTamanhoListaMedico(medicos) > 0){
+                            Medico.GerarRelatorioIdadeMinMax(31, 32, medicos);
+                        }else{
+                            Console.WriteLine("---Lista Vazia");
+                        }
+
                     break;
                 case "6":
+                        if(VerificaTamanhoListaPaciente(pacientes) > 0){
+                            Paciente.GerarRelatorioIdadeMinMaxPaciente(31, 21, pacientes);
+                        }else{
+                            Console.WriteLine("---Lista Vazia");
+                        }
 
                     break;
                 case "7":
-                       
+                        if(VerificaTamanhoListaPaciente(pacientes) > 0){
+                            Paciente.BuscarPacientesPeloSexo("feminimo", pacientes);
+                        }else{
+                            Console.WriteLine("---Lista Vazia");
+                        }
                     break;
                 case "0":
                     Console.WriteLine("Saindo do sistema. Até logo!");

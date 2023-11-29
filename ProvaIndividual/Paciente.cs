@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Serialization;
 
 class Paciente{
     private string Nome{get; set;}
@@ -75,9 +76,19 @@ class Paciente{
     var idadeNoIntervalo = pacientes.Where(m => m.IdadePaciente >= idadeMinimo && m.IdadePaciente <= idadeMaximo).ToList();
 
     Console.WriteLine($"Médicos com idade entre {idadeMinimo} e {idadeMaximo}:");
-    foreach (var medico in idadeNoIntervalo) {
-        Console.WriteLine($"Medico Nome: {medico.Nome}, Idade: {medico.IdadePaciente}");
+    foreach (var paciente in idadeNoIntervalo) {
+        Console.WriteLine($"Paciente \nNome: {paciente.Nome}, Idade: {paciente.IdadePaciente}");
     }
     }
+
+    public static void BuscarPacientesPeloSexo(string sexo,List<Paciente> pacientes){
+        var pacientesSexo = pacientes.Where(m => m.Sexo == sexo).ToList();
+        foreach (var paciente in pacientes) {
+            Console.WriteLine($"Paciente \nNome: {paciente.Nome}, Sexo: {paciente.Sexo}");
+            
+        }
+
+    }
+
 
 }
