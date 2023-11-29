@@ -2,12 +2,15 @@ using System;
 
 class Paciente{
     private string Nome{get; set;}
-    private string DataNascimento{get; set;}
+    private DateTime DataNascimento{get; set;}
     private string CPF{get; set;}
     private string Sexo{get; set;}
     private string Sintomas{get; set;}
 
-    public Paciente(string nome, string dataNascimento, string Cpf, string sexo, string sintomas){
+    public int IdadePaciente => DateTime.Now.Year -DataNascimento.Year;
+
+
+    public Paciente(string nome, DateTime dataNascimento, string Cpf, string sexo, string sintomas){
         if(string.IsNullOrWhiteSpace(Cpf)){
             throw new Exception("CPF inválido");
         }
@@ -24,7 +27,7 @@ class Paciente{
             string nomePaciente = Console.ReadLine()!;
 
             Console.WriteLine("Digite o data de nascimento:");
-            string dataNascPaciente = Console.ReadLine()!;
+            DateTime dataNascPaciente = DateTime.Parse(Console.ReadLine()!);
 
             Console.WriteLine("Digite o cpf:");
             string cpfPaciente = Console.ReadLine()!;
@@ -66,6 +69,15 @@ class Paciente{
         foreach (var paciente in pacientes) {
             Console.WriteLine($"--Paciente--: \nCPF{paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento}, \nSexo: {paciente.Sexo}, \nSintomas: {paciente.Sintomas}, \n");
         }
+    }
+
+    public static void GerarRelatorioIdadeMinMaxPaciente(int idadeMinimo, int idadeMaximo, List<Paciente> pacientes) {
+    var idadeNoIntervalo = pacientes.Where(m => m.IdadePaciente >= idadeMinimo && m.IdadePaciente <= idadeMaximo).ToList();
+
+    Console.WriteLine($"Médicos com idade entre {idadeMinimo} e {idadeMaximo}:");
+    foreach (var medico in idadeNoIntervalo) {
+        Console.WriteLine($"Medico Nome: {medico.Nome}, Idade: {medico.IdadePaciente}");
+    }
     }
 
 }

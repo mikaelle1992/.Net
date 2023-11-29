@@ -7,6 +7,7 @@ class Medico{
     private DateTime DataNascimento{get; set;}
     private string CPF{get; set;}
     private string CRM{get; set;}
+    public int IdadeMedico => DateTime.Now.Year -DataNascimento.Year;
 
     public Medico(string nome, DateTime dataNascimento, string Cpf, string Crm){
         if(string.IsNullOrWhiteSpace(Cpf)){
@@ -66,4 +67,13 @@ class Medico{
             Console.WriteLine($"--Medico--: \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
         }
     }
+
+    public static void GerarRelatorioIdadeMinMax(int idadeMinimo, int idadeMaximo, List<Medico> medicos) {
+    var idadeNoIntervalo = medicos.Where(m => m.IdadeMedico >= idadeMinimo && m.IdadeMedico <= idadeMaximo).ToList();
+
+    Console.WriteLine($"Médicos com idade entre {idadeMinimo} e {idadeMaximo}:");
+    foreach (var medico in idadeNoIntervalo) {
+        Console.WriteLine($"Medico Nome: {medico.Nome}, Idade: {medico.IdadeMedico}");
+    }
+}
 }
