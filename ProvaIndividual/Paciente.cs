@@ -90,5 +90,28 @@ class Paciente{
 
     }
 
+    public static void ImprimiPacienteOrdemAlfabetica(List<Paciente> pacientes) {
+        var pacientesOrdenados = pacientes.OrderBy(p => p.Nome).ToList();
+
+        foreach (var paciente in pacientesOrdenados) {
+            Console.WriteLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento}, \nSexo: {paciente.Sexo}, \nSintomas: {paciente.Sintomas}, \n");
+        }
+    }
+    public static void ImprimiPacientePorMesNscimento(int mes, List<Paciente> pacientes) {
+        var pacientesOrdenadosMesNasci = pacientes.OrderBy(p => p.DataNascimento.Month == mes).ToList();
+
+        foreach (var paciente in pacientesOrdenadosMesNasci) {
+            Console.WriteLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento}, \nSexo: {paciente.Sexo}, \nSintomas: {paciente.Sintomas}, \n");
+        }    
+}
+
+    public static void BuscaPacienteSintomas(string sintoma, List<Paciente> pacientes) {
+        var pacientesPorSintoma = pacientes.OrderBy(p => p.Sintomas.Contains(sintoma)).ToList();
+
+        foreach (var paciente in pacientesPorSintoma) {
+            Console.WriteLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento}, \nSexo: {paciente.Sexo}, \nSintomas: {paciente.Sintomas}, \n");
+        }    
+}
+
 
 }

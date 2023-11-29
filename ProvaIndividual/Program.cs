@@ -15,6 +15,9 @@ class Program{
             Console.WriteLine("5. Gerar Relatorio de  entre a idade Minima e Maxima do medico");
             Console.WriteLine("6. Gerar Relatorio de  entre a idade Minima e Maxima do Paciente");
             Console.WriteLine("7. Listar pacientes pelo sexo");
+            Console.WriteLine("8. Listar pacientes  por ordem");
+            Console.WriteLine("9. Listar pacientes pelo mês");
+            Console.WriteLine("10.Buscar Paciente por sintoma ");
             Console.WriteLine("0. Sair");
 
             Console.Write("Escolha uma opção: ");
@@ -71,6 +74,27 @@ class Program{
                 case "7":
                         if(VerificaTamanhoListaPaciente(pacientes) > 0){
                             Paciente.BuscarPacientesPeloSexo("feminimo", pacientes);
+                        }else{
+                            Console.WriteLine("---Lista Vazia");
+                        }
+                    break;
+                case "8":
+                        if(VerificaTamanhoListaPaciente(pacientes) > 0){
+                            Paciente.ImprimiPacienteOrdemAlfabetica(pacientes);
+                        }else{
+                            Console.WriteLine("---Lista Vazia");
+                        }
+                    break;
+                case "9":
+                        if(VerificaTamanhoListaPaciente(pacientes) > 0){
+                            Paciente.ImprimiPacientePorMesNscimento(12, pacientes);
+                        }else{
+                            Console.WriteLine("---Lista Vazia");
+                        }
+                    break;
+                case "10":
+                        if(VerificaTamanhoListaPaciente(pacientes) > 0){
+                            Paciente.BuscaPacienteSintomas("febre", pacientes);
                         }else{
                             Console.WriteLine("---Lista Vazia");
                         }
