@@ -1,0 +1,14 @@
+/home/mikaelle/Desktop/Net/ProvaIndividual/bin/Debug/net7.0/ProvaIndividual
+/home/mikaelle/Desktop/Net/ProvaIndividual/bin/Debug/net7.0/ProvaIndividual.deps.json
+/home/mikaelle/Desktop/Net/ProvaIndividual/bin/Debug/net7.0/ProvaIndividual.runtimeconfig.json
+/home/mikaelle/Desktop/Net/ProvaIndividual/bin/Debug/net7.0/ProvaIndividual.dll
+/home/mikaelle/Desktop/Net/ProvaIndividual/bin/Debug/net7.0/ProvaIndividual.pdb
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ProvaIndividual.GeneratedMSBuildEditorConfig.editorconfig
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ProvaIndividual.AssemblyInfoInputs.cache
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ProvaIndividual.AssemblyInfo.cs
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ProvaIndividual.csproj.CoreCompileInputs.cache
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ProvaIndividual.dll
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/refint/ProvaIndividual.dll
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ProvaIndividual.pdb
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ProvaIndividual.genruntimeconfig.cache
+/home/mikaelle/Desktop/Net/ProvaIndividual/obj/Debug/net7.0/ref/ProvaIndividual.dll

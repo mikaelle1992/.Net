@@ -8,7 +8,7 @@ class Program{
         {
             Console.WriteLine("\n===== Sistema de Gerenciamento medico =====");
             Console.WriteLine("1. Adicionar Medico");
-            Console.WriteLine("2.");
+            Console.WriteLine("2. Lista de Medicos");
             Console.WriteLine("3. ");
             Console.WriteLine("4.");
             Console.WriteLine("5. ");
@@ -22,14 +22,17 @@ class Program{
             switch(opc){
                 case "1":
                     do {
-
+                         Medico.CadastrarMedico(medicos);
                         Console.WriteLine("Deseja cadastrar outro produto? (S/N)");
                     } while (Console.ReadLine()?.Trim().ToUpper() == "S");
                     
-                
                     break;
                 case "2":
-                    
+                    if(VerificaTamanhoListaMedico(medicos) > 0){
+                        Medico.ImprimiMedicos(medicos);
+                    }else{
+                        Console.WriteLine("Lista Vazia");
+                    }
                     break;
 
                 case "3":
@@ -57,10 +60,11 @@ class Program{
                     break;
 
             }
-        }   
-    }
+        }  
 
-    static bool ValidaCPF(string cpf){
-        return cpf.Length == 11;
+        static int VerificaTamanhoListaMedico(List<Medico> medicos) {
+
+            return medicos.Count;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 class Medico{
     private string Nome{get; set;}
@@ -8,7 +9,7 @@ class Medico{
     private string CRM{get; set;}
 
     public Medico(string nome, string dataNascimento, string Cpf, string Crm){
-        if(string.IsNullOrWhiteSpace(CPF)){
+        if(string.IsNullOrWhiteSpace(Cpf)){
             throw new Exception("Código do Produto inválido");
         }
         Nome = nome;
@@ -17,7 +18,7 @@ class Medico{
         CRM = Crm;
     }
 
-    public static void CadastrarMedico(Medico medico, List<Medico> medicos){
+    public static void CadastrarMedico(List<Medico> medicos){
         try{
             Console.WriteLine("Digite o Nome do medico:");
             string nomeMedico = Console.ReadLine()!;
@@ -28,11 +29,16 @@ class Medico{
             Console.WriteLine("Digite o cpf:");
             string cpfMedico = Console.ReadLine()!;
             
-            Console.WriteLine("Digite o preço Unitário do produto:");
+            Console.WriteLine("Digite o CRM:");
             string crm = Console.ReadLine()!;
             if(ValidaCPF(cpfMedico)){
-                Medico novoProduto = new Medico(nomeMedico, dataNascMedico, cpfMedico, crm);
-                medicos.Add(novoProduto);
+
+                if(VerificaCRM(crm, medicos)){
+                    Medico novoProduto = new Medico(nomeMedico, dataNascMedico, cpfMedico, crm);
+                    medicos.Add(novoProduto);
+                }else{
+                    Console.WriteLine("CRM já cadastrado");
+                }
             }else{
                 throw new Exception("CPF invalido");
             }
@@ -55,5 +61,9 @@ class Medico{
         return true;
     }
 
- 
+    public static void ImprimiMedicos(List<Medico> medicos){
+        foreach (var medico in medicos) {
+            Console.WriteLine($"--Medico--: \nCPF{medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
+        }
+    }
 }
