@@ -4,11 +4,11 @@ using System.Xml.Serialization;
 
 class Medico{
     private string Nome{get; set;}
-    private string DataNascimento{get; set;}
+    private DateTime DataNascimento{get; set;}
     private string CPF{get; set;}
     private string CRM{get; set;}
 
-    public Medico(string nome, string dataNascimento, string Cpf, string Crm){
+    public Medico(string nome, DateTime dataNascimento, string Cpf, string Crm){
         if(string.IsNullOrWhiteSpace(Cpf)){
             throw new Exception("Código do Produto inválido");
         }
@@ -24,7 +24,7 @@ class Medico{
             string nomeMedico = Console.ReadLine()!;
 
             Console.WriteLine("Digite o data de nascimento:");
-            string dataNascMedico = Console.ReadLine()!;
+            DateTime dataNascMedico = DateTime.Parse(Console.ReadLine()!);
 
             Console.WriteLine("Digite o cpf:");
             string cpfMedico = Console.ReadLine()!;
@@ -63,7 +63,7 @@ class Medico{
 
     public static void ImprimiMedicos(List<Medico> medicos){
         foreach (var medico in medicos) {
-            Console.WriteLine($"--Medico--: \nCPF{medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
+            Console.WriteLine($"--Medico--: \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
         }
     }
 }
