@@ -9,6 +9,7 @@ namespace Prova_grupo.Service{
         public string AddMedico(string nome, DateTime dataNascMedico, string cpfMedico, string crm){
             var bulder = new StringBuilder();
             var validaCPF = medicoRepositorio.ValidaCPF(cpfMedico);
+            var medicoId = medicoRepositorio.TamLista() +1;
             var verificaCrmMedica= medicoRepositorio.VerificaCRM(crm);
 
             if(!validaCPF){
@@ -17,7 +18,8 @@ namespace Prova_grupo.Service{
             }if(!verificaCrmMedica){
                 return bulder.Append("CRM já está cadastrado, tente novamento!").ToString();
             }else{
-                medicoRepositorio.CadastrarMedico(new Medico(nome, dataNascMedico, cpfMedico, crm));
+
+                medicoRepositorio.CadastrarMedico(new Medico(medicoId, nome, dataNascMedico, cpfMedico,crm));
                 return "Medico adicionado com sucesso!";
             }
             
@@ -31,8 +33,9 @@ namespace Prova_grupo.Service{
             if(tamanhoLista ==0){
                 return bulder.Append("Lista vazia!").ToString();
             }else{
+                bulder.AppendLine($"--Medicos--:");
                 foreach(Medico medico in medicosList){
-                    bulder.AppendLine($"--Medico--: \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
+                    bulder.AppendLine($"Id: {medico.Id}, \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
                 }
                 return bulder.ToString();
             }    
@@ -53,6 +56,16 @@ namespace Prova_grupo.Service{
                     bulder.AppendLine($"Medico-> Nome: {medico.Nome}, Idade: {medico.IdadePessoa}");
                 }
                 return bulder.ToString();
+            }
+        }
+
+        public Medico BuscarMedicoPorId(int id){
+            var medicoId = medicoRepositorio.BuscaPorId(id);
+
+            if(medicoId ==null){
+                throw new ArgumentException("Médico não encontrado", nameof(id));
+            }else{
+                return medicoId;
             }
         }
     }

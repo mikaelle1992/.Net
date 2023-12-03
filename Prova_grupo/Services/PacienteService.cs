@@ -12,6 +12,7 @@ namespace Prova_grupo.Service
             var bulder = new StringBuilder();
             var validaCPF = pacienteRepositorio.ValidaCPF(cpfPaciente);
             var verificaCpfLista= pacienteRepositorio.ValidaCPF(cpfPaciente);
+            var pacienteId = pacienteRepositorio.TamLista() +1;
 
             if(!validaCPF){
                 return bulder.Append("CPF invalidado, tente novamento!").ToString();
@@ -19,7 +20,7 @@ namespace Prova_grupo.Service
             }if(!verificaCpfLista){
                 return bulder.Append("CPF já está cadastrado, tente novamento!").ToString();
             }else{
-                pacienteRepositorio.CadastrarPaciente(new Paciente(nome, dataNascPaciente, cpfPaciente, sexo, sintomas));
+                pacienteRepositorio.CadastrarPaciente(new Paciente(pacienteId, nome, dataNascPaciente, cpfPaciente, sexo, sintomas));
                 return "Paciente adicionado com sucesso!";
             }
         }
@@ -118,6 +119,16 @@ namespace Prova_grupo.Service
                     }
                 }
                 return bulder.ToString();   
+            }
+        }
+
+        public Paciente BuscarPacientePorId(int id){
+            var pacienteId = pacienteRepositorio.BuscaPaciPorId(id);
+
+            if(pacienteId ==null){
+                throw new ArgumentException("Paciente não encontrado", nameof(id));
+            }else{
+                return pacienteId;
             }
         }
 

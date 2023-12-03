@@ -40,6 +40,10 @@ namespace Prova_grupo.Data{
         public List<Medico> GerarRelatorioIdadeMinMaxMedico(int idadeMinimo, int idadeMaximo){
             return medicoList.FindAll(m => m.IdadePessoa >= idadeMinimo && m.IdadePessoa <= idadeMaximo);
         }
+        public Medico BuscaPorId(int id){
+            return medicoList.Find(m=>m.Id == id);
+
+        }
 
 
     }

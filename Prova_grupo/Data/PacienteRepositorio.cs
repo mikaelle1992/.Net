@@ -56,7 +56,9 @@ namespace Prova_grupo.Data
             return pacienteList.FindAll(p => p.Sintomas.Contains(sintoma));
         }
 
-
+        public Paciente BuscaPaciPorId(int id){
+            return pacienteList.Find(p=>p.IdPaciente == id);
+        }
         
 
 
