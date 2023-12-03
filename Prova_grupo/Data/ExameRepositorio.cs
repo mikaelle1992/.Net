@@ -6,9 +6,10 @@ namespace Prova_grupo.Data
     {
         private List<Exame> listaExames = new List<Exame>();
 
-        public void AdicionarExame(Exame novoExame)
+        public List<Exame> AdicionarExame(Exame novoExame)
         {
             listaExames.Add(novoExame);
+            return listaExames;
         }
 
         public List<Exame> ListaExames(){

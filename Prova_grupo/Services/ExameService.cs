@@ -8,8 +8,9 @@ namespace Prova_grupo.Service
     {
         ExameRepositorio exameRepositorio = new ExameRepositorio();
 
-        public void AddExame(Exame exame){
-                exameRepositorio.AdicionarExame(exame);
+        public List<Exame> AddExame(Exame exame){
+                var listExames = exameRepositorio.AdicionarExame(exame);
+                return listExames;
         }
 
         public string ListarExames(){
