@@ -65,7 +65,7 @@ class Program{
                     break;
                 case "6":
                         if(VerificaTamanhoListaPaciente(pacientes) > 0){
-                            Paciente.GerarRelatorioIdadeMinMaxPaciente(31, 21, pacientes);
+                            Paciente.GerarRelatorioIdadeMinMaxPessoa(31, 21, pacientes);
                         }else{
                             Console.WriteLine("---Lista Vazia");
                         }
