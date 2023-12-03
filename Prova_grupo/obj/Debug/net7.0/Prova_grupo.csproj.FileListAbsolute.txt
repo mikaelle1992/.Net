@@ -1,0 +1,14 @@
+/home/mikaelle/Desktop/Net/Prova_grupo/bin/Debug/net7.0/Prova_grupo
+/home/mikaelle/Desktop/Net/Prova_grupo/bin/Debug/net7.0/Prova_grupo.deps.json
+/home/mikaelle/Desktop/Net/Prova_grupo/bin/Debug/net7.0/Prova_grupo.runtimeconfig.json
+/home/mikaelle/Desktop/Net/Prova_grupo/bin/Debug/net7.0/Prova_grupo.dll
+/home/mikaelle/Desktop/Net/Prova_grupo/bin/Debug/net7.0/Prova_grupo.pdb
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/Prova_grupo.GeneratedMSBuildEditorConfig.editorconfig
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/Prova_grupo.AssemblyInfoInputs.cache
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/Prova_grupo.AssemblyInfo.cs
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/Prova_grupo.csproj.CoreCompileInputs.cache
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/Prova_grupo.dll
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/refint/Prova_grupo.dll
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/Prova_grupo.pdb
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/Prova_grupo.genruntimeconfig.cache
+/home/mikaelle/Desktop/Net/Prova_grupo/obj/Debug/net7.0/ref/Prova_grupo.dll
