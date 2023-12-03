@@ -9,7 +9,7 @@ namespace Prova_grupo.Service
     {
         AtendimentoRepositorio atendimentoRepositorio = new AtendimentoRepositorio();
 
-        public string iniciarAtendimento(DateTime inicio, string suspeitaInicial, List<(Exame, string)> examesResultado, float valor, Medico medicoResponsavel, Paciente paciente){
+        public string iniciarAtendimento( string suspeitaInicial, List<(Exame, string)> examesResultado, float valor, Medico medicoResponsavel, Paciente paciente){
             var bulder = new StringBuilder();
             var atendimentoid = atendimentoRepositorio.TamListAtendimento() + 1;
             var verificaAtendimento = atendimentoRepositorio.VerificaAtendimentoMedicoPaciente(medicoResponsavel, paciente);
@@ -17,8 +17,8 @@ namespace Prova_grupo.Service
             if (!verificaAtendimento){
                 return bulder.Append("Médico já atendeu essa paciente!").ToString();
             }else{
-                atendimentoRepositorio.AddAtendimento(new Atendimento(atendimentoid, inicio, suspeitaInicial, examesResultado, valor, medicoResponsavel, paciente));
-                bulder.Append("Medico adicionado com sucesso!").ToString(); 
+                atendimentoRepositorio.AddAtendimento(new Atendimento(atendimentoid, DateTime.Now, suspeitaInicial, examesResultado, valor, medicoResponsavel, paciente));
+                bulder.Append("Atendimento adicionado com sucesso!").ToString(); 
             }
 
             return bulder.ToString();
@@ -34,8 +34,7 @@ namespace Prova_grupo.Service
                 return bulder.Append("Lista vazia!").ToString();
             }if(fimData <= fimAtend.Inicio){
                 return bulder.Append("Data final só poderá ser posterior à data inicial!").ToString();
-            }
-            if(fimData > fimAtend.Inicio){
+            }if(fimData > fimAtend.Inicio){
                 fimAtend.Fim = fimData;
                 fimAtend.DiagnosticoFinal = diagnostico;
                 bulder.Append("Atendimento finalizado com sucesso");
@@ -43,19 +42,16 @@ namespace Prova_grupo.Service
             return bulder.ToString();
         }
 
-        public string BuscaPorAtendimentoFinalizado(){
+        public string BuscaMedicosPorAtendimentosConcluidos(){
             var bulder = new StringBuilder();
-            var buscaPorAtendimentoConclui = atendimentoRepositorio.ListarMedicosPorAtendimentosConcluidos();
+            var buscaPorAtendimentoConclui = atendimentoRepositorio.ListarMedicosPorAtendConcl();
             var tamanhoLista = atendimentoRepositorio.TamListAtendimento();
 
             if(tamanhoLista == 0){
                 return bulder.Append("Lista vazia!").ToString();
             }else{
-                foreach(Atendimento atendimento in buscaPorAtendimentoConclui){
-                    bulder.AppendLine($"--Paciente--: \nInicio: {atendimento.Inicio}, \nSuspeita Inicial: {atendimento.SuspeitaInicial}, \nValor: {atendimento.Valor}, \nFim: {atendimento.Fim}, \nMédico: {atendimento.MedicoResponsavel}, \nPaciente: {atendimento._Paciente}, \nDiagnostico: {atendimento.DiagnosticoFinal}, \n");
-                    foreach ((Exame exame, string resultado) in atendimento.ListaExamesResultados){
-                        bulder.AppendLine($"- Exame - \nTítulo: {exame.Titulo}, \nValor: {exame.Valor}, \nDescrição: {exame.Descricao}, \nLocal: {exame.Local}, \nResultado: {resultado}");
-                    }
+                foreach(Medico medico in buscaPorAtendimentoConclui){
+                    bulder.AppendLine($"--Medico--: \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
                 }
                 return bulder.ToString();
             }
@@ -80,24 +76,38 @@ namespace Prova_grupo.Service
             }
         }
 
-        public string ListarMedicosPorAtendimentosConcluidosOrdenada(){
+        public string ListarAtendimentosNaoConcluidosOrdenada(){
             var bulder = new StringBuilder();
-            var listaOrdenadaPoratendeConcluido = atendimentoRepositorio.ListarMedicosPorAtendimentosConcluidos();
+            var listaOrdenadaPoratendeNaoConcluido = atendimentoRepositorio.ListarAtendimentoEmAberto();
             var tamanhoLista = atendimentoRepositorio.TamListAtendimento();
 
             if(tamanhoLista == 0){
                 return bulder.Append("Lista vazia!").ToString();
             }else{
-                foreach(Atendimento atendimento in listaOrdenadaPoratendeConcluido){
+                foreach(Atendimento atendimento in listaOrdenadaPoratendeNaoConcluido){
                     bulder.AppendLine($"--Paciente--: \nInicio: {atendimento.Inicio}, \nSuspeita Inicial: {atendimento.SuspeitaInicial}, \nValor: {atendimento.Valor}, \nFim: {atendimento.Fim}, \nMédico: {atendimento.MedicoResponsavel}, \nPaciente: {atendimento._Paciente}, \nDiagnostico: {atendimento.DiagnosticoFinal}, \n");
-                    foreach ((Exame exame, string resultado) in atendimento.ListaExamesResultados)
-                    {
+                    foreach ((Exame exame, string resultado) in atendimento.ListaExamesResultados){
                         bulder.AppendLine($"- Exame - \nTítulo: {exame.Titulo}, \nValor: {exame.Valor}, \nDescrição: {exame.Descricao}, \nLocal: {exame.Local}, \nResultado: {resultado}");
                     }
                 }
                 return bulder.ToString();
-                
             }
+        }
+
+        public string ListaExamesMaisUtiliz(int tamanho){
+            var bulder = new StringBuilder();
+            var listaExamesMaisUti = atendimentoRepositorio.ListaExamesMaisUtilizadas(tamanho);
+            var tamanhoLista = atendimentoRepositorio.TamListAtendimento();
+
+            if(tamanhoLista == 0){
+                return bulder.Append("Lista vazia!").ToString();
+            }else{
+                foreach (Exame exame in listaExamesMaisUti){
+                    bulder.AppendLine($"- Exame - \nTítulo: {exame.Titulo}, \nValor: {exame.Valor}, \nDescrição: {exame.Descricao}, \nLocal: {exame.Local}");
+                }
+                return bulder.ToString();
+            }
+                
         }
 
 
