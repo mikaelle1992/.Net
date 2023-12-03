@@ -46,11 +46,22 @@ namespace Prova_grupo.Data
 
         }
 
-        public List<Atendimento> ListarMedicosPorAtendimentosConcluidos(){
-            return atendimentoList.OrderBy(x=>x.Fim).ToList();   
+        public List<Medico> ListarMedicosPorAtendConcl(){
+            var medicoAtendimentos = atendimentoList
+                .Where(x => x.Fim != null)  
+                .GroupBy(x => x.MedicoResponsavel)     
+                .Select(group => new {
+                    Medico = group.Key,
+                    QuantidadeAtendimentosConcluidos = group.Count()
+                })
+                .OrderByDescending(x => x.QuantidadeAtendimentosConcluidos)
+                .Select(x => x.Medico)
+                .ToList();
+
+            return medicoAtendimentos;   
         }
 
-        public List<Exame> ListaExamesMaisUtilizadas()
+        public List<Exame> ListaExamesMaisUtilizadas(int tamanho)
         {
             var todosOsExames = atendimentoList
                 .SelectMany(atendimento => atendimento.ListaExamesResultados.Select(tupla => tupla.Item1))
@@ -65,17 +76,17 @@ namespace Prova_grupo.Data
                     grupo.First().Local
                 ))
                 .OrderByDescending(exame => exame.Valor)
-                .Take(10)
+                .Take(tamanho)
                 .ToList();
 
             return examesAgrupados;
         }
 
-        public List<Atendimento> ListarAtendimentoPorAtendNaoConcl(){
-            return atendimentoList.OrderBy(x=>x.Fim==null).ToList();   
+        public List<Atendimento> ListarAtendimentoEmAberto(){
+            return atendimentoList.Where(x => x.Fim == null)  
+                                    .OrderByDescending(x => x.Inicio)
+                                    .ToList();
         } 
 
     }
 }
-
-
