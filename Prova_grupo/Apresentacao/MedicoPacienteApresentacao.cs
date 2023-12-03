@@ -1,4 +1,5 @@
 using Prova_grupo.Service;
+using Prova_grupo.Domain; 
 
 namespace Prova_grupo.Apresentacao{
     public class MedicoPacienteApresentacao{
@@ -119,5 +120,123 @@ namespace Prova_grupo.Apresentacao{
             }
 
         }
+
+
+        public void MenuApresentacao(){
+
+            ExameService examesLista = new ExameService();
+
+            
+            AtendimentoService atendimentoService = new AtendimentoService();
+
+            List<(Exame, string)> listaExamesAtendimento = new List<(Exame, string)>();
+
+            string operador = String.Empty;
+
+            while(operador!="0"){
+                Console.WriteLine("1 -Iniciar Atendimento");
+                Console.WriteLine("2 -Listar atendimentos em aberto");
+                Console.WriteLine("3 -Buscar atendimento por suspeita ou diagnostico");
+                Console.WriteLine("4 -Listar atendimentos não finalizados");
+                Console.WriteLine("5 -Listar exames mais utilizados");
+                Console.WriteLine("6 -Listar Medicos por quantidade de atendimento concluido");
+                Console.WriteLine("7 -Finalizar atendimento");
+                operador = Console.ReadLine()!;
+
+                switch(operador){
+                    case "1":
+                        Console.WriteLine("Digite a suspeita inicial:");
+                        string suspeitaInicial = Console.ReadLine()!;
+
+                        do {
+                            Console.WriteLine("Digite o titulo do exame:");
+                            string titulo = Console.ReadLine()!;
+
+                            Console.WriteLine("Digite o valor do  exame:");
+                            float valor = float.Parse(Console.ReadLine()!);
+
+                            Console.WriteLine("Digite a descrição do exame:");
+                            string descricao = Console.ReadLine()!;
+
+
+                            Console.WriteLine("Digite o local exame:");
+                            string local = Console.ReadLine()!;
+
+
+                            listaExamesAtendimento.Add((new Exame(titulo, valor, descricao, local), null));
+                            Console.WriteLine("Deseja adicionar mais um sintoma? (S/N)");
+                        } while (Console.ReadLine()?.Trim().ToUpper() == "S");
+
+                        Console.WriteLine("Digite o valor do  exame:");
+                        float valorAtendimento = float.Parse(Console.ReadLine()!);
+
+                        //Lista de medicos para o atendimento;
+                        medicoService.ListarTodosMedicos();
+
+                        Console.WriteLine("Escolha o medico pelo id:");
+                        int idMedico = int.Parse(Console.ReadLine()!);
+                        var buscaMedicoId = medicoService.BuscarMedicoPorId(idMedico);
+
+
+                        //Lista de pacienentes para o atendimento;
+                        pacienteService.ListarPacientes();
+    
+
+                        Console.WriteLine("Escolha o paciente pelo id:");
+                        int idPaciente = int.Parse(Console.ReadLine()!);
+                        var buscaPaciente = pacienteService.BuscarPacientePorId(idPaciente);
+
+                        atendimentoService.iniciarAtendimento( suspeitaInicial, listaExamesAtendimento, valorAtendimento, buscaMedicoId, buscaPaciente );
+
+                        var response = "";
+                        Console.WriteLine(response);
+                        Console.WriteLine("---------------------");
+
+                        break;
+                    case "2":
+                        var response02 = "";
+                        Console.WriteLine(response02);
+                        Console.WriteLine("---------------------");
+                        break;
+                    case "3":
+                        var response03 = "";
+                        Console.WriteLine(response03);
+                        Console.WriteLine("---------------------");
+                        break;
+
+                    case "4":
+
+                        var response04 ="";
+                        Console.WriteLine(response04);
+                        Console.WriteLine("---------------------");
+
+                        break;
+                    case "5":
+                        var response05 = "";
+                        Console.WriteLine(response05);
+                        Console.WriteLine("---------------------");
+                        break;
+
+                    case "6":
+                        var response06 = "";
+                        Console.WriteLine(response06);
+                        Console.WriteLine("---------------------");
+                        break;
+
+                    case "7":
+                        var response07 = "";
+                        Console.WriteLine(response07);
+                        Console.WriteLine("---------------------");
+                        break;
+
+                    case "0":
+                        Environment.Exit(0);
+                        break;
+                }
+
+            }
+
+        }
+
     }
 }
