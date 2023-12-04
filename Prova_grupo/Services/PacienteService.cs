@@ -71,7 +71,7 @@ namespace Prova_grupo.Service
             }else{
                 Console.WriteLine($"Pacientes do sexo {sexo}:");
                 foreach(Paciente paciente in pacientePorSexo){
-                    bulder.AppendLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento}, \nSexo: {paciente.Sexo}");
+                    bulder.AppendLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento.ToString("dd/MM/yyyy")}, \nSexo: {paciente.Sexo}");
                     bulder.AppendLine("Sintomas:");
                     foreach (string sintomaPaciente in paciente.Sintomas){
                         bulder.AppendLine($"->{sintomaPaciente}");
@@ -91,7 +91,7 @@ namespace Prova_grupo.Service
             }else{
                 Console.WriteLine($"Pacientes por ordem alfabetica:");
                 foreach(Paciente paciente in pacientesOrdemAlfab){
-                    bulder.AppendLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento}, \nSexo: {paciente.Sexo}");
+                    bulder.AppendLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento.ToString("dd/MM/yyyy")}, \nSexo: {paciente.Sexo}");
                     bulder.AppendLine("Sintomas:");
                     foreach (string sintomaPaciente in paciente.Sintomas){
                         bulder.AppendLine($"Sintomas:{sintomaPaciente}");
@@ -112,7 +112,7 @@ namespace Prova_grupo.Service
             }else{
                 Console.WriteLine($"Pacientes com os os sintomas {sintoma}:");
                 foreach(Paciente paciente in pacientesPorSintomas){
-                    bulder.AppendLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento}, \nSexo: {paciente.Sexo}");
+                    bulder.AppendLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento.ToString("dd/MM/yyyy")}, \nSexo: {paciente.Sexo}");
                     bulder.AppendLine("Sintomas:");
                     foreach (string sintomaPaciente in paciente.Sintomas){
                         bulder.AppendLine($"Sintomas:{sintomaPaciente}");

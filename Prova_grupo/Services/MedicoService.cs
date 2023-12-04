@@ -18,11 +18,9 @@ namespace Prova_grupo.Service{
             }if(!verificaCrmMedica){
                 return bulder.Append("CRM já está cadastrado, tente novamento!").ToString();
             }else{
-
                 medicoRepositorio.CadastrarMedico(new Medico(medicoId, nome, dataNascMedico, cpfMedico,crm));
                 return "Medico adicionado com sucesso!";
-            }
-            
+            }  
         }
 
         public string ListarTodosMedicos(){
@@ -35,7 +33,7 @@ namespace Prova_grupo.Service{
             }else{
                 bulder.AppendLine($"--Medicos--:");
                 foreach(Medico medico in medicosList){
-                    bulder.AppendLine($"Id: {medico.Id}, \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
+                    bulder.AppendLine($"Id: {medico.Id}, \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento.ToString("dd/MM/yyyy")}, \nCRM: {medico.CRM}");
                 }
                 return bulder.ToString();
             }    

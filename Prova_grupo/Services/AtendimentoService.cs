@@ -11,12 +11,12 @@ namespace Prova_grupo.Service
 
         public string iniciarAtendimento( string suspeitaInicial, List<(Exame, string)> examesResultado, float valor, Medico medicoResponsavel, Paciente paciente){
             var bulder = new StringBuilder();
-            var atendimentoid = atendimentoRepositorio.TamListAtendimento() + 1;
             var verificaAtendimento = atendimentoRepositorio.VerificaAtendimentoMedicoPaciente(medicoResponsavel, paciente);
 
             if (!verificaAtendimento){
                 return bulder.Append("Médico já atendeu essa paciente!").ToString();
             }else{
+                var atendimentoid = atendimentoRepositorio.TamListAtendimento() + 1;
                 atendimentoRepositorio.AddAtendimento(new Atendimento(atendimentoid, DateTime.Now, suspeitaInicial, examesResultado, valor, medicoResponsavel, paciente));
                 bulder.Append("Atendimento adicionado com sucesso!").ToString(); 
             }
@@ -34,7 +34,7 @@ namespace Prova_grupo.Service
                 return bulder.Append("Lista vazia!").ToString();
             }if(fimData <= fimAtend.Inicio){
                 return bulder.Append("Data final só poderá ser posterior à data inicial!").ToString();
-            }if(fimData > fimAtend.Inicio){
+            }else{
                 fimAtend.Fim = fimData;
                 fimAtend.DiagnosticoFinal = diagnostico;
                 bulder.Append("Atendimento finalizado com sucesso");
@@ -50,8 +50,9 @@ namespace Prova_grupo.Service
             if(tamanhoLista == 0){
                 return bulder.Append("Lista vazia!").ToString();
             }else{
+                bulder.AppendLine($"--Medicos--: ");
                 foreach(Medico medico in buscaPorAtendimentoConclui){
-                    bulder.AppendLine($"--Medico--: \nCPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
+                    bulder.AppendLine($"{medico.Id} -> CPF: {medico.CPF}, \nNome: {medico.Nome}, \nDataNasc: {medico.DataNascimento}, \nCRM: {medico.CRM}");
                 }
                 return bulder.ToString();
             }
@@ -66,6 +67,7 @@ namespace Prova_grupo.Service
             if(tamanhoLista == 0){
                 return bulder.Append("Lista vazia!").ToString();
             }else{
+                 bulder.AppendLine($"--Medicos--: ");
                 foreach(Atendimento atendimento in buscaPorSuspeitaDiag){
                     bulder.AppendLine($"--Paciente--: \nInicio: {atendimento.Inicio}, \nSuspeita Inicial: {atendimento.SuspeitaInicial}, \nValor: {atendimento.Valor}, \nFim: {atendimento.Fim}, \nMédico: {atendimento.MedicoResponsavel}, \nPaciente: {atendimento._Paciente}, \nDiagnostico: {atendimento.DiagnosticoFinal}, \n");
                     foreach ((Exame exame, string resultado) in atendimento.ListaExamesResultados){
@@ -76,7 +78,7 @@ namespace Prova_grupo.Service
             }
         }
 
-        public string ListarAtendimentosNaoConcluidosOrdenada(){
+        public string ListarAtendimentosEmAbertoOrdenada(){
             var bulder = new StringBuilder();
             var listaOrdenadaPoratendeNaoConcluido = atendimentoRepositorio.ListarAtendimentoEmAberto();
             var tamanhoLista = atendimentoRepositorio.TamListAtendimento();
