@@ -1,12 +1,11 @@
 using Prova_grupo.Service;
-using Prova_grupo.Domain; 
+using Prova_grupo.Domain;
+using System.Globalization;
 
 namespace Prova_grupo.Apresentacao{
     public class MedicoPacienteApresentacao{
-        MedicoService medicoService = new MedicoService();
-        PacienteService pacienteService = new PacienteService();
 
-        public void Menu(){
+        public void Menu(MedicoService medicoService, PacienteService pacienteService){
             List<string> sintomasLista = new List<string>();
             string operador = String.Empty;
 
@@ -27,8 +26,8 @@ namespace Prova_grupo.Apresentacao{
                         Console.WriteLine("Digite o Nome do medico:");
                         string nomeMedico = Console.ReadLine()!;
 
-                        Console.WriteLine("Digite o data de nascimento:");
-                        DateTime dataNascMedico = DateTime.Parse(Console.ReadLine()!);
+                        Console.WriteLine("Digite o data de nascimento (dd/mm/yyyy):");
+                        DateTime dataNascMedico = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                         Console.WriteLine("Digite o cpf:");
                         string cpfMedico = Console.ReadLine()!;
@@ -57,7 +56,8 @@ namespace Prova_grupo.Apresentacao{
                         string nomePaciente = Console.ReadLine()!;
 
                         Console.WriteLine("Digite o data de nascimento:");
-                        DateTime dataNascPaciente = DateTime.Parse(Console.ReadLine()!);
+                        DateTime dataNascPaciente = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        
 
                         Console.WriteLine("Digite o cpf:");
                         string cpfPaciente = Console.ReadLine()!;
@@ -111,21 +111,22 @@ namespace Prova_grupo.Apresentacao{
                         Console.WriteLine(response09);
                         Console.WriteLine("---------------------");
                         break;
-
                     case "0":
-                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida. Tente novamente.");
                         break;
                 }
-
             }
-
+            if (operador == "0"){
+                    MenuDeServicos(medicoService, pacienteService);
+            }
         }
 
-
-        public void MenuApresentacao(){
+        public void MenuApresentacao(MedicoService medicoService, PacienteService pacienteService){
 
             ExameService examesLista = new ExameService();
-
+            const int TAM_LIST_MAIS_USADOS = 10;
             
             AtendimentoService atendimentoService = new AtendimentoService();
 
@@ -137,10 +138,9 @@ namespace Prova_grupo.Apresentacao{
                 Console.WriteLine("1 -Iniciar Atendimento");
                 Console.WriteLine("2 -Listar atendimentos em aberto");
                 Console.WriteLine("3 -Buscar atendimento por suspeita ou diagnostico");
-                Console.WriteLine("4 -Listar atendimentos não finalizados");
-                Console.WriteLine("5 -Listar exames mais utilizados");
-                Console.WriteLine("6 -Listar Medicos por quantidade de atendimento concluido");
-                Console.WriteLine("7 -Finalizar atendimento");
+                Console.WriteLine("4 -Listar exames mais utilizados");
+                Console.WriteLine("5 -Listar Medicos por quantidade de atendimento concluido");
+                Console.WriteLine("6 -Finalizar atendimento");
                 operador = Console.ReadLine()!;
 
                 switch(operador){
@@ -164,14 +164,15 @@ namespace Prova_grupo.Apresentacao{
 
 
                             listaExamesAtendimento.Add((new Exame(titulo, valor, descricao, local), null));
-                            Console.WriteLine("Deseja adicionar mais um sintoma? (S/N)");
+                            Console.WriteLine("Deseja adicionar mais um exame? (S/N)");
                         } while (Console.ReadLine()?.Trim().ToUpper() == "S");
 
-                        Console.WriteLine("Digite o valor do  exame:");
+                        Console.WriteLine("Digite o valor do atendimento:");
                         float valorAtendimento = float.Parse(Console.ReadLine()!);
 
                         //Lista de medicos para o atendimento;
-                        medicoService.ListarTodosMedicos();
+                        var medicosParaAtendimento = medicoService.ListarTodosMedicos();
+                        Console.WriteLine(medicosParaAtendimento);
 
                         Console.WriteLine("Escolha o medico pelo id:");
                         int idMedico = int.Parse(Console.ReadLine()!);
@@ -179,63 +180,103 @@ namespace Prova_grupo.Apresentacao{
 
 
                         //Lista de pacienentes para o atendimento;
-                        pacienteService.ListarPacientes();
-    
+                       var pacientePataAtendimento = pacienteService.ListarPacientes();
+                        Console.WriteLine(pacientePataAtendimento);   
 
                         Console.WriteLine("Escolha o paciente pelo id:");
                         int idPaciente = int.Parse(Console.ReadLine()!);
                         var buscaPaciente = pacienteService.BuscarPacientePorId(idPaciente);
 
-                        atendimentoService.iniciarAtendimento( suspeitaInicial, listaExamesAtendimento, valorAtendimento, buscaMedicoId, buscaPaciente );
-
-                        var response = "";
+                        var response = atendimentoService.iniciarAtendimento( suspeitaInicial, listaExamesAtendimento, valorAtendimento, buscaMedicoId, buscaPaciente );
+                        
                         Console.WriteLine(response);
                         Console.WriteLine("---------------------");
 
                         break;
                     case "2":
-                        var response02 = "";
+                        var response02 = atendimentoService.ListarAtendimentosEmAbertoOrdenada();
                         Console.WriteLine(response02);
                         Console.WriteLine("---------------------");
                         break;
                     case "3":
-                        var response03 = "";
+                        Console.WriteLine("Digite a suspeita ou diagnostico para busca em nossa base de dados:");
+                        string suspeitaDiagnosticoBusca = Console.ReadLine()!;
+
+                        var response03 = atendimentoService.BuscaPorSuspeitaDiagnosticoFinal(suspeitaDiagnosticoBusca);
                         Console.WriteLine(response03);
                         Console.WriteLine("---------------------");
                         break;
 
                     case "4":
 
-                        var response04 ="";
+                        var response04 =atendimentoService.ListaExamesMaisUtiliz(TAM_LIST_MAIS_USADOS);
                         Console.WriteLine(response04);
                         Console.WriteLine("---------------------");
 
                         break;
                     case "5":
-                        var response05 = "";
+                        var response05 = atendimentoService.BuscaMedicosPorAtendimentosConcluidos();
                         Console.WriteLine(response05);
                         Console.WriteLine("---------------------");
                         break;
 
                     case "6":
-                        var response06 = "";
+                            Console.WriteLine("Digite a data do fim do atendimento:");
+                            DateTime datafim = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                            Console.WriteLine("Digite o valor do  exame:");
+                            string diagnosticoFinal = Console.ReadLine()!;
+
+                            Console.WriteLine("Digite a descrição do exame:");
+                            int idAtendimentoFinal = int.Parse(Console.ReadLine()!);
+
+                        var response06 = atendimentoService.fimAtendimento(datafim, diagnosticoFinal, idAtendimentoFinal);
                         Console.WriteLine(response06);
                         Console.WriteLine("---------------------");
                         break;
-
-                    case "7":
-                        var response07 = "";
-                        Console.WriteLine(response07);
-                        Console.WriteLine("---------------------");
-                        break;
-
                     case "0":
-                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida. Tente novamente.");
                         break;
                 }
-
             }
+            if (operador == "0"){
+                    MenuDeServicos(medicoService, pacienteService);
+            }
+        }
+        public void MenuDeServicos(MedicoService medicoService, PacienteService pacienteService){
+            MedicoPacienteApresentacao medicoPacienteApresentacao = new MedicoPacienteApresentacao();
 
+            string operador = String.Empty;
+
+            while(operador!="0"){
+                Console.WriteLine("1 -Menu de Medicos e Pacientes");
+                Console.WriteLine("2 -Menu de tendimentos");
+
+                operador = Console.ReadLine()!;
+
+                switch(operador){
+                    case "1":
+                        medicoPacienteApresentacao.Menu(medicoService, pacienteService );
+                        break;
+                    case "2":
+                        medicoPacienteApresentacao.MenuApresentacao(medicoService, pacienteService );
+                        break;
+                    case "0":
+
+                        break;
+                    default:
+                            Console.WriteLine("Opção inválida. Tente novamente.");
+                            break;
+                }
+            }
+            if (operador == "0"){
+                    MenuDeServicos(medicoService, pacienteService);
+                }
+
+
+ 
         }
 
     }
