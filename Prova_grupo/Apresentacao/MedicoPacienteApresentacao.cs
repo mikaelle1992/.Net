@@ -5,8 +5,28 @@ using System.Globalization;
 namespace Prova_grupo.Apresentacao{
     public class MedicoPacienteApresentacao{
 
+        public DateTime solicitaData(){
+            DateTime dataNascPaciente;
+            bool dataValida = false;
+
+            do
+            {
+                Console.WriteLine("Digite o data de nascimento (formato dd/MM/yyyy):");
+                string inputDataNascimento = Console.ReadLine();
+
+                if (DateTime.TryParseExact(inputDataNascimento, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out dataNascPaciente)){
+                    dataValida = true;
+                }else{
+                    Console.WriteLine("Formato de data inválido. Tente novamente.");
+                }
+
+            } while (!dataValida);
+
+            return dataNascPaciente;
+
+        }
+
         public void Menu(MedicoService medicoService, PacienteService pacienteService){
-            List<string> sintomasLista = new List<string>();
             string operador = String.Empty;
 
             while(operador!="0"){
@@ -23,11 +43,11 @@ namespace Prova_grupo.Apresentacao{
 
                 switch(operador){
                     case "1":
+
                         Console.WriteLine("Digite o Nome do medico:");
                         string nomeMedico = Console.ReadLine()!;
 
-                        Console.WriteLine("Digite o data de nascimento (dd/mm/yyyy):");
-                        DateTime dataNascMedico = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        var dataNascMedico = solicitaData();
 
                         Console.WriteLine("Digite o cpf:");
                         string cpfMedico = Console.ReadLine()!;
@@ -52,12 +72,12 @@ namespace Prova_grupo.Apresentacao{
                         break;
 
                     case "4":
+                        List<string> sintomasLista = new List<string>();
+
                         Console.WriteLine("Digite o Nome do paciente:");
                         string nomePaciente = Console.ReadLine()!;
 
-                        Console.WriteLine("Digite o data de nascimento:");
-                        DateTime dataNascPaciente = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                        
+                        var dataNascPaciente = solicitaData();                       
 
                         Console.WriteLine("Digite o cpf:");
                         string cpfPaciente = Console.ReadLine()!;
@@ -130,7 +150,6 @@ namespace Prova_grupo.Apresentacao{
             
             AtendimentoService atendimentoService = new AtendimentoService();
 
-            List<(Exame, string)> listaExamesAtendimento = new List<(Exame, string)>();
 
             string operador = String.Empty;
 
@@ -145,6 +164,8 @@ namespace Prova_grupo.Apresentacao{
 
                 switch(operador){
                     case "1":
+                        List<(Exame, string)> listaExamesAtendimento = new List<(Exame, string)>();
+
                         Console.WriteLine("Digite a suspeita inicial:");
                         string suspeitaInicial = Console.ReadLine()!;
 
@@ -221,13 +242,14 @@ namespace Prova_grupo.Apresentacao{
                         break;
 
                     case "6":
-                            Console.WriteLine("Digite a data do fim do atendimento:");
-                            DateTime datafim = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                            // Console.WriteLine("Digite a data do fim do atendimento:");
+                            // DateTime datafim = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                            var datafim = solicitaData();
 
-                            Console.WriteLine("Digite o valor do  exame:");
+                            Console.WriteLine("Digite o diagnostico final:");
                             string diagnosticoFinal = Console.ReadLine()!;
 
-                            Console.WriteLine("Digite a descrição do exame:");
+                            Console.WriteLine("Digite o id do atendimento:");
                             int idAtendimentoFinal = int.Parse(Console.ReadLine()!);
 
                         var response06 = atendimentoService.fimAtendimento(datafim, diagnosticoFinal, idAtendimentoFinal);
