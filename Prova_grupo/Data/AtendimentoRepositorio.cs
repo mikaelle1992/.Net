@@ -78,7 +78,7 @@ namespace Prova_grupo.Data
                     grupo.First().Descricao, 
                     grupo.First().Local
                 ))
-                .OrderByDescending(exame => exame.Valor)
+                .OrderBy(exame => exame.Valor)
                 .Take(tamanho)
                 .ToList();
 
