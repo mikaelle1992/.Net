@@ -41,8 +41,12 @@ namespace Prova_grupo.Data{
             return medicoList.FindAll(m => m.IdadePessoa >= idadeMinimo && m.IdadePessoa <= idadeMaximo);
         }
         public Medico BuscaPorId(int id){
-            return medicoList.Find(m=>m.Id == id);
-
+            var medicoId = medicoList.Find(m=>m.Id == id);
+            if(medicoId != null){
+                return medicoId;
+            }else{
+                throw new InvalidOperationException($"Medico com ID {id} não encontrado");
+            }
         }
 
 

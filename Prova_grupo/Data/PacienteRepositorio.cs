@@ -40,24 +40,55 @@ namespace Prova_grupo.Data
         }
 
         public List<Paciente> GerarRelatorioIdadeMinMaxPaciente(int idadeMinimo, int idadeMaximo){
-            return pacienteList.FindAll(m => m.IdadePessoa >= idadeMinimo && m.IdadePessoa <= idadeMaximo);
+            var buscaMinMax = pacienteList.FindAll(m => m.IdadePessoa >= idadeMinimo && m.IdadePessoa <= idadeMaximo);
+
+            if(buscaMinMax != null){
+                return buscaMinMax;
+            }else{
+                throw new InvalidOperationException($"Paciente com idade entre {idadeMinimo} e {idadeMaximo} não encontrado");
+            }       
         }
 
         public List<Paciente> BuscarPacientesPeloSexo(string sexo){
-            return pacienteList.FindAll(m => m.Sexo == sexo);
+            var buscaSexo = pacienteList.FindAll(m => m.Sexo == sexo);
 
+            if(buscaSexo  != null){
+                return buscaSexo ;
+            }else{
+                throw new InvalidOperationException($"Pacientes do sexo {sexo} não encontrado");
+            } 
+            
         }
 
         public List<Paciente> ImprimiPacienteOrdemAlfabetica(){
-            return pacienteList.OrderBy(p => p.Nome).ToList();
+            
+            var pacienteOrdenado =  pacienteList.OrderBy(p => p.Nome).ToList();
+            if(pacienteOrdenado  != null){
+                return pacienteOrdenado ;
+            }else{
+                throw new InvalidOperationException($"Listas de Pacientes vazia");
+            } 
+            
         }
 
         public List<Paciente> BuscaPacienteSintomas(string sintoma){
-            return pacienteList.FindAll(p => p.Sintomas.Contains(sintoma));
+            
+            var buscaSintomas =  pacienteList.FindAll(p => p.Sintomas.Contains(sintoma));
+            if(buscaSintomas  != null){
+                return buscaSintomas ;
+            }else{
+                throw new InvalidOperationException($"Pacientes com sintoma {sintoma} não encontrado");
+            }            
         }
 
         public Paciente BuscaPaciPorId(int id){
-            return pacienteList.Find(p=>p.IdPaciente == id);
+            
+            var buscaID = pacienteList.Find(p=>p.IdPaciente == id);
+            if(buscaID  != null){
+                return buscaID ;
+            }else{
+                throw new InvalidOperationException($"Pacientes com id {id} não encontrado");
+            }                        
         }
         
 

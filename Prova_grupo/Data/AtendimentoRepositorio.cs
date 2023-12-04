@@ -17,32 +17,35 @@ namespace Prova_grupo.Data
             return atendimentoList.Count;
         }
 
-        public bool Delete(int AtendimentoID){
-            var removerAtendimento = atendimentoList.Find(x => x.Id == AtendimentoID);
-            if(removerAtendimento == null){
-                return false;
-            }else{
-                atendimentoList.Remove(removerAtendimento);
-                return true;
-            }
-        }
         public bool VerificaAtendimentoMedicoPaciente(Medico medicoAtendi, Paciente pacienteAtendida){
 
-            var verificaAtendimento = atendimentoList.Find(x=>x.MedicoResponsavel == medicoAtendi && x._Paciente ==pacienteAtendida);
+            var verificaAtendimento = atendimentoList.Find(x=>x.MedicoResponsavel.Nome == medicoAtendi.Nome && x._Paciente.Nome ==pacienteAtendida.Nome);
             if(verificaAtendimento == null){
-                return false;
-            }else{
                 return true;
+            }else{
+                return false;
             }
         }
 
         public Atendimento buscarPorId(int AtendimentoID){
-            return atendimentoList.Find(x => x.Id == AtendimentoID);
+            var idEncontrado = atendimentoList.Find(x => x.Id == AtendimentoID);
+            if(idEncontrado != null){
+                return idEncontrado;
+            }else{
+                throw new InvalidOperationException($"Atendimento com ID {AtendimentoID} não encontrado.");
+            }
 
         }
 
         public List<Atendimento> BuscarAtendiSuspeitaDiagnostico(string suspeitaDiagnostico){
-            return atendimentoList.FindAll(m => m.SuspeitaInicial.Contains(suspeitaDiagnostico) || m.DiagnosticoFinal.Contains(suspeitaDiagnostico));
+            var buscauspeitaDiagnostico = atendimentoList.FindAll(m => m.SuspeitaInicial.Contains(suspeitaDiagnostico) || (m.DiagnosticoFinal != null && m.DiagnosticoFinal.Contains(suspeitaDiagnostico)));
+            
+
+            if(buscauspeitaDiagnostico != null){
+                return buscauspeitaDiagnostico;
+            }else{
+                throw new InvalidOperationException($"Suspeita ou Diagnostico {suspeitaDiagnostico} não encontrado.");
+            }
 
         }
 
