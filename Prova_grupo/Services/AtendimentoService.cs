@@ -11,7 +11,7 @@ namespace Prova_grupo.Service
 
         public string iniciarAtendimento( string suspeitaInicial, List<(Exame, string)> examesResultado, float valor, Medico medicoResponsavel, Paciente paciente){
             var bulder = new StringBuilder();
-            var verificaAtendimento = atendimentoRepositorio.VerificaAtendimentoMedicoPaciente(medicoResponsavel, paciente);
+            bool verificaAtendimento = atendimentoRepositorio.VerificaAtendimentoMedicoPaciente(medicoResponsavel, paciente);
 
             if (!verificaAtendimento){
                 return bulder.Append("Médico já atendeu essa paciente!").ToString();
@@ -23,6 +23,7 @@ namespace Prova_grupo.Service
 
             return bulder.ToString();
         }
+
 
 
         public string fimAtendimento(DateTime fimData, string diagnostico, int id){
@@ -69,10 +70,12 @@ namespace Prova_grupo.Service
             }else{
                  bulder.AppendLine($"--Medicos--: ");
                 foreach(Atendimento atendimento in buscaPorSuspeitaDiag){
-                    bulder.AppendLine($"--Paciente--: \nInicio: {atendimento.Inicio}, \nSuspeita Inicial: {atendimento.SuspeitaInicial}, \nValor: {atendimento.Valor}, \nFim: {atendimento.Fim}, \nMédico: {atendimento.MedicoResponsavel}, \nPaciente: {atendimento._Paciente}, \nDiagnostico: {atendimento.DiagnosticoFinal}, \n");
+                    bulder.AppendLine($"--Paciente--: \nInicio: {atendimento.Inicio}, \nSuspeita Inicial: {atendimento.SuspeitaInicial}, \nValor: {atendimento.Valor}, \nFim: {atendimento.Fim}, \nDiagnostico: {atendimento.DiagnosticoFinal}, \n");
                     foreach ((Exame exame, string resultado) in atendimento.ListaExamesResultados){
                         bulder.AppendLine($"- Exame - \nTítulo: {exame.Titulo}, \nValor: {exame.Valor}, \nDescrição: {exame.Descricao}, \nLocal: {exame.Local}, \nResultado: {resultado}");
                     }
+                    bulder.AppendLine($"\nMédico: {atendimento.MedicoResponsavel.Nome} - CRM: {atendimento.MedicoResponsavel.CRM} \nPaciente: {atendimento._Paciente.Nome} - {atendimento._Paciente.CPF},"); 
+
                 }
                 return bulder.ToString();
             }
@@ -87,10 +90,11 @@ namespace Prova_grupo.Service
                 return bulder.Append("Lista vazia!").ToString();
             }else{
                 foreach(Atendimento atendimento in listaOrdenadaPoratendeNaoConcluido){
-                    bulder.AppendLine($"--Paciente--: \nInicio: {atendimento.Inicio}, \nSuspeita Inicial: {atendimento.SuspeitaInicial}, \nValor: {atendimento.Valor}, \nFim: {atendimento.Fim}, \nMédico: {atendimento.MedicoResponsavel}, \nPaciente: {atendimento._Paciente}, \nDiagnostico: {atendimento.DiagnosticoFinal}, \n");
+                    bulder.AppendLine($"--Paciente--: \nInicio: {atendimento.Inicio}, \nSuspeita Inicial: {atendimento.SuspeitaInicial}, \nValor: {atendimento.Valor}");
                     foreach ((Exame exame, string resultado) in atendimento.ListaExamesResultados){
                         bulder.AppendLine($"- Exame - \nTítulo: {exame.Titulo}, \nValor: {exame.Valor}, \nDescrição: {exame.Descricao}, \nLocal: {exame.Local}, \nResultado: {resultado}");
                     }
+                    bulder.AppendLine($"\nMédico: {atendimento.MedicoResponsavel.Nome} - CRM: {atendimento.MedicoResponsavel.CRM} \nPaciente: {atendimento._Paciente.Nome} - {atendimento._Paciente.CPF},"); 
                 }
                 return bulder.ToString();
             }
