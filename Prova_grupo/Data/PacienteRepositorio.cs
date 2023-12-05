@@ -90,7 +90,16 @@ namespace Prova_grupo.Data
                 throw new InvalidOperationException($"Pacientes com id {id} não encontrado");
             }                        
         }
-        
+
+        public List<Paciente>  ImprimiPorMesNscimento(int mes) {
+            var pacientesOrdenadosMesNasci = pacienteList.OrderBy(p => p.DataNascimento.Month == mes).ToList();
+
+            if(pacientesOrdenadosMesNasci  != null){
+                return pacientesOrdenadosMesNasci;
+            }else{
+                throw new InvalidOperationException($"Pacientes do {mes} não encontrado");
+            }  
+        }        
 
 
     }

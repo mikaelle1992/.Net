@@ -132,5 +132,25 @@ namespace Prova_grupo.Service
             }
         }
 
+        public string BuscaPacientePorMesNascimento(int mes){
+            var bulder = new StringBuilder();
+            var pacientesPorMesNascimento = pacienteRepositorio.ImprimiPorMesNscimento(mes);
+            var tamanhoLista = pacientesPorMesNascimento.Count;
+
+            if(tamanhoLista ==0){
+                return bulder.Append("Lista vazia!").ToString();
+            }else{
+                Console.WriteLine($"Pacientes do mês de {mes}:");
+                foreach(Paciente paciente in pacientesPorMesNascimento){
+                    bulder.AppendLine($"--Paciente--: \nCPF: {paciente.CPF}, \nNome: {paciente.Nome}, \nDataNasc: {paciente.DataNascimento.ToString("dd/MM/yyyy")}, \nSexo: {paciente.Sexo}");
+                    bulder.AppendLine("Sintomas:");
+                    foreach (string sintomaPaciente in paciente.Sintomas){
+                        bulder.AppendLine($"Sintomas:{sintomaPaciente}");
+                    }
+                }
+                return bulder.ToString();                
+            }
+        }
+
     }
 }

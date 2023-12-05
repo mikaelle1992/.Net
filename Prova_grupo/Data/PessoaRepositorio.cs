@@ -15,5 +15,6 @@ namespace Prova_grupo.Data{
 
         public virtual int TamLista(){return 0;}
 
+
     }
 }
